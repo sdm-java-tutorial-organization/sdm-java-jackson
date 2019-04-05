@@ -6,10 +6,12 @@ import java.util.Map;
 
 public class JacksonReadValue {
 
+    public static ObjectMapper om = new ObjectMapper();
+
     public static void main(String[] args) {
 
-        ObjectMapper om = new ObjectMapper();
-        String jsonStr = "{" +
+        // == parseString ==
+        String strOfJson = "{" +
                 "\"result\":true," +
                 "\"msg\":\"\"," +
                 "\"value\":" +
@@ -20,13 +22,20 @@ public class JacksonReadValue {
                 "{\"optionType\":1,\"curPoint\":1,\"emblemNo\":10,\"updateDate\":1544063594,\"goalPoint\":30,\"optionValue\":10000,\"achivId\":72170100,\"title\":\"[한정] 난투장 구경\",\"classType\":0,\"desc\":\"난투장에 {0}회 이상 참가하세요.\"}" +
                 "]" +
                 "}\n";
+        parseString(strOfJson);
+
+    }
+
+    // parse string(json)
+    static Object parseString(String strOfJson) {
+        Map<String, Object> myJson = null;
         try {
             // JSON 문자열을 Map or List Object 로 변환
-            Map<String, Object> m = om.readValue(jsonStr, new TypeReference<Map<String, Object>>(){});
-            System.out.println("json to object : " + m);
+            myJson = om.readValue(strOfJson, new TypeReference<Map<String, Object>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return myJson;
     }
+
 }
